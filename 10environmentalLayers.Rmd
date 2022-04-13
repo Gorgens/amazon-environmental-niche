@@ -135,12 +135,12 @@ clearDays = raster(vals=values(clearDays),
 clearDays = setMinMax(clearDays)
 
 ## Month with less than 100 mm ---------------------------
-# month100 = raster('./data/month100.tif') %>% crop(ref)
-# month100 = raster(vals=values(month100),
-#                   ext=extent(ref), 
-#                   nrows=dim(ref)[1],
-#                   ncols=dim(ref)[2])
-# month100 = setMinMax(month100)
+month100 = raster('./data/month100.tif') %>% crop(ref)
+month100 = raster(vals=values(month100),
+                 ext=extent(ref), 
+                 nrows=dim(ref)[1],
+                 ncols=dim(ref)[2])
+month100 = setMinMax(month100)
 
 ## Annual precipitation ---------------------------
 pannual = raster('./data/pannual.tif') %>% crop(ref)
@@ -151,12 +151,12 @@ pannual = raster(vals=values(pannual),
 pannual = setMinMax(pannual)
 
 ## Precipitation of the driest month ---------------------------
-# pdriest = raster('./data/pdriest.tif') %>% crop(ref)
-# pdriest = raster(vals=values(pdriest),
-#                  ext=extent(ref), 
-#                  nrows=dim(ref)[1],
-#                  ncols=dim(ref)[2])
-# pdriest = setMinMax(pdriest)
+pdriest = raster('./data/pdriest.tif') %>% crop(ref)
+pdriest = raster(vals=values(pdriest),
+                ext=extent(ref), 
+                nrows=dim(ref)[1],
+                ncols=dim(ref)[2])
+pdriest = setMinMax(pdriest)
 
 ## Precipitation of the wettest month ---------------------------
 pwettest = raster('./data/pwettest.tif') %>% crop(ref)
@@ -219,12 +219,6 @@ waterContent[waterContent <= 0] = NA
 
 ```{r}
 ## Stack das variáveis ambientais ---------------------------
-layers = stack(uspeed, 
-               vspeed)
-
-```
-
-## Stack das variáveis ambientais ---------------------------
 layers = stack(fapar, 
                elevation, 
                uspeed, 
@@ -232,9 +226,9 @@ layers = stack(fapar,
                clearDays, 
                days20, 
                lightning, 
-               #month100, 
+               month100, 
                pannual, 
-               #pdriest, 
+               pdriest, 
                pet, 
                pseason, 
                pwettest, 
@@ -244,6 +238,9 @@ layers = stack(fapar,
                clayContent, 
                waterContent)
 
+save(layers, 
+   file = 'C:/Users/User/Documents/RStudio/secrets-robson/layers2estimate.Rdata')
+
 layers2estimate = stack(fapar2,
                         elevation,
                         uspeed,
@@ -251,9 +248,9 @@ layers2estimate = stack(fapar2,
                         clearDays,
                         days20,
                         lightning,
-                        #month100,
+                        month100,
                         pannual,
-                        #pdriest,
+                        pdriest,
                         pet,
                         pseason,
                         pwettest,
@@ -263,34 +260,12 @@ layers2estimate = stack(fapar2,
                         clayContent,
                         waterContent)
 
-layers2maxent = stack(#fapar2, 
-                        elevation, 
-                        #uspeed, 
-                        #vspeed, 
-                        clearDays, 
-                        days20, 
-                        lightning, 
-                        #month100, 
-                        pannual, 
-                        #pdriest, 
-                        pet, 
-                        pseason, 
-                        pwettest, 
-                        tannual, 
-                        tseason, 
-                        tmax, 
-                        clayContent, 
-                        waterContent)
-
-# save(layers2estimate, 
-#     file = 'C:/Users/User/Documents/RStudio/secrets-robson/layers2estimate.Rdata')
-
-```{r}
-# atualiza nome das camadas
-names(layers) = c("uspeed", 
-                  "vspeed")
+save(layers2estimate, 
+   file = 'C:/Users/User/Documents/RStudio/secrets-robson/layers2estimate.Rdata')
 ```
 
+
+```{r}
 names(layers) = c("fapar", 
                   "elevation", 
                   "uspeed", 
@@ -298,9 +273,9 @@ names(layers) = c("fapar",
                   "clearDays", 
                   "days20",
                   "lightning",
-                  #"month100",
+                  "month100",
                   "pannual",
-                  #"pdriest",
+                  "pdriest",
                   "pet",
                   "pseason",
                   "pwettest",
@@ -317,9 +292,9 @@ names(layers2estimate) = c("fapar",
                            "clearDays",
                            "days20",
                            "lightning",
-                           #"month100",
+                           "month100",
                            "pannual",
-                           #"pdriest",
+                           "pdriest",
                            "pet",
                            "pseason",
                            "pwettest",
@@ -328,25 +303,8 @@ names(layers2estimate) = c("fapar",
                            "tmax",
                            "clayContent",
                            "waterContent")
+```
 
-names(layers2maxent) = c(#"fapar", 
-                           "elevation",
-                           #"uspeed", 
-                           #"vspeed",
-                           "clearDays",
-                           "days20",
-                           "lightning",
-                           #"month100",
-                           "pannual",
-                           #"pdriest",
-                           "pet",
-                           "pseason",
-                           "pwettest",
-                           "tannual",
-                           "tseason",
-                           "tmax",
-                           "clayContent",
-                           "waterContent")
 
 ```{r}
 ## Open sites coordinates ---------------------------
