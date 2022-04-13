@@ -1,0 +1,68 @@
+---
+title: "My Example Computed Manuscript"
+subtitle: Created in Rmarkdown
+titlerunning: Example computed manuscript
+date: "`r format(Sys.time(), '%d %b %Y %H:%M:%S %Z')`"
+author: "Eric Bastos Gorgens, UFVJM"
+output:
+  bookdown::html_document2: default
+  pdf_document: default
+  bookdown::word_document2: default
+  bookdown::pdf_book:
+    base_format: rticles::springer_article
+    extra_dependencies: booktabs
+abstract: "Write here the absctract... \n"
+bibliography: bibliography.bib
+biblio-style: spbasic
+authors:
+- name: Jeffrey M. Perkel
+  address: Springer Nature, 1 New York Plaza, New York, NY
+  email: jeffrey.perkel@nature.com
+csl: abnt.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      echo = FALSE)
+```
+
+```{r load-libraries, include=FALSE}
+# load libraries
+library(tidyverse)
+library(ggbeeswarm)
+library(bookdown)
+```
+
+# Introduction {#intro}
+
+"Literate programming" is a style of programming that uses computational notebooks to weave together code, explanatory text, data and results into a single document, enhancing scientific communication and computational reproducibility.[@shen2014; @perkel2018a; @perkel2018] (These references were added into the document using RStudio's integration with the open-source Zotero reference manager [@perkel2020] plus the [Better BibTeX](https://retorque.re/zotero-better-bibtex/) Zotero plugin.)
+
+Several platforms for creating such documents exist.[@perkel2021] Typically, these documents interleave code and text 'blocks' to build a computational narrative. But some, including [R Markdown](https://rmarkdown.rstudio.com/), [Observable](https://www.observablehq.com), and the [Jupyter Book](https://jupyterbook.org/intro.html) extension to the Jupyter ecosystem, also allow authors to include and execute code "inline" -- that is, within the text itself.
+
+This makes it possible to create fully executable manuscripts in which the document itself computes and inserts values and figures into the text rather than requiring authors to input them manually. This is in many ways the 'killer feature' of computed manuscripts: it circumvents the possibility that the author will enter an incorrect number, or forget to update a figure or value should new data arise. Among other uses, that allows authors to automatically time-stamp their documents, or insert the current version number of the software they use into their methods. For instance, this document was built at **`r format(Sys.time(), "%d %b %Y %H:%M:%S %Z")`** and calls the following R packages: `{tidyverse}` ver. **`r packageVersion("tidyverse")`**, `{ggbeeswarm}` ver. **`r packageVersion("ggbeeswarm")`** and `{bookdown}` ver. **`r packageVersion("bookdown")`**.
+
+In this manuscript, created in RStudio using the R Markdown language, we will demonstrate a more practical example. (An Observable version is [also available](https://observablehq.com/@jperkel/example-executable-observable-notebook).)
+
+# Methods
+
+```{r get-methods, child="02methods.Rmd"}
+# import the text from child_doc.Rmd
+```
+
+# Results {#results}
+
+```{r radius}
+# radius of a circle
+r = 10
+```
+
+Rather than analyzing those data and then copying the results into our manuscript, we can use the programming language `R` to do that in the manuscript itself. Simply enclose the code inside backticks, with the letter `r`. For instance, we could calculate the circumference and area of a circle:
+
+$$A = \pi r^2, C = 2 \pi r$$
+
+# Discussion
+
+The following code was used to load, merge, and plot the (simulated) clinical trial data in Figure \@ref(fig:plot-data-1)
+
+# References
